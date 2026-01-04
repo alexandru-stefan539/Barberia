@@ -2,31 +2,55 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Reservar cita</title>
+  <title>Barbería Profesional</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>Reserva tu cita</h1>
+<header>
+  <h1>Barbería Profesional</h1>
+  <p>Reserva tu cita en segundos</p>
+</header>
 
-<h2>Servicio</h2>
-<div id="servicios">
-  <button onclick="seleccionarServicio(this,'Corte')">Corte</button>
-  <button onclick="seleccionarServicio(this,'Tinte')">Tinte</button>
-  <button onclick="seleccionarServicio(this,'Corte + Tinte')">Corte + Tinte</button>
-</div>
+<section id="servicios" class="seccion">
+  <h2>Servicios</h2>
+  <div class="grid">
+    <button onclick="seleccionarServicio(this,'Corte')">Corte<br><span>15€</span></button>
+    <button onclick="seleccionarServicio(this,'Corte + tinte')">Corte + tinte<br><span>30€</span></button>
+    <button onclick="seleccionarServicio(this,'Tinte')">Tinte<br><span>20€</span></button>
+  </div>
+</section>
 
-<h2>Día</h2>
-<div id="dias"></div>
+<section id="dias" class="seccion oculto">
+  <h2>Selecciona un día</h2>
+  <div class="calendario">
+    <div class="mes">
+      <button onclick="cambiarMes(-1)">‹</button>
+      <span id="nombreMes"></span>
+      <button onclick="cambiarMes(1)">›</button>
+    </div>
+    <div id="diasMes" class="grid"></div>
+  </div>
+</section>
 
-<h2>Hora</h2>
-<div id="horas"></div>
+<section id="horas" class="seccion oculto">
+  <h2>Selecciona una hora</h2>
 
-<h2>Datos</h2>
-<form onsubmit="reservar(event)">
-  <input id="nombre" placeholder="Nombre" required>
-  <button>Confirmar cita</button>
-</form>
+  <h3>MAÑANA</h3>
+  <div id="manana" class="grid"></div>
+
+  <h3>TARDE</h3>
+  <div id="tarde" class="grid"></div>
+</section>
+
+<section id="formulario" class="seccion oculto">
+  <h2>Datos de contacto</h2>
+  <form onsubmit="reservar(event)">
+    <input id="nombre" type="text" placeholder="Nombre" required>
+    <button type="submit">Confirmar cita</button>
+  </form>
+</section>
 
 <script src="clientes.js"></script>
 </body>
