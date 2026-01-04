@@ -4,7 +4,10 @@ const USER = "admin";
 const PASS = "1234";
 
 document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("btnLogin").addEventListener("click", login);
+  const btn = document.getElementById("btnLogin");
+  if (btn) {
+    btn.addEventListener("click", login);
+  }
 });
 
 function login() {
@@ -23,6 +26,3 @@ function login() {
 function logout() {
   location.reload();
 }
-
-
-
