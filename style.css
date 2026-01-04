@@ -1,53 +1,11 @@
-body {
-  font-family: Arial;
-  background: #0f0f0f;
-  color: #fff;
-  margin: 0;
-}
+body{font-family:Arial;background:#0f0f0f;color:#fff;margin:0}
+header{text-align:center;padding:20px;background:#000}
+.seccion{padding:20px}
+button{padding:15px;border-radius:10px;border:none;background:#1e1e1e;color:#fff}
+.grid{display:grid;gap:10px}
+.oculto{display:none}
 
-header {
-  text-align: center;
-  padding: 20px;
-  background: #000;
-}
-
-.seccion {
-  padding: 20px;
-}
-
-button {
-  padding: 15px;
-  border-radius: 10px;
-  border: none;
-  background: #1e1e1e;
-  color: #fff;
-  cursor: pointer;
-}
-
-.oculto {
-  display: none;
-}
-
-.grid {
-  display: grid;
-  gap: 10px;
-}
-
-/* ===== ESTADOS ===== */
-
-button.seleccionado {
-  background: #ff7a00;
-  color: #000;
-}
-
-button.bloqueado {
-  background: #444;
-  color: #999;
-  pointer-events: none;
-}
-
-button.ocupado {
-  background: #7a0000;
-  color: #fff;
-  pointer-events: none;
+button.seleccionado{
+  background:#ff7a00;
+  color:#000;
 }
