@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel del Barbero</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="panel.css">
+</head>
+<body>
+
+<h1>Panel del Barbero</h1>
+<div id="login">
+  <input id="user" placeholder="Usuario">
+  <input id="pass" type="password" placeholder="Contraseña">
+  <button onclick="login()">Entrar</button>
+</div>
+
+<div id="panel" style="display:none">
+  <h2>Citas</h2>
+  <ul id="lista"></ul>
+</div>
+
+<script src="barbero.js"></script>
+</body>
+</html>

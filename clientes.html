@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Barbería Profesional</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>Barbería Profesional</h1>
+  <p>Reserva tu cita en segundos</p>
+</header>
+
+<section id="servicios" class="seccion">
+  <h2>Servicios</h2>
+  <div class="grid">
+    <button onclick="seleccionarServicio('Corte')">Corte<br><span>15€</span></button>
+    <button onclick="seleccionarServicio('Corte + tinte')">Corte + tinte<br><span>30€</span></button>
+    <button onclick="seleccionarServicio('Tinte')">Tinte<br><span>20€</span></button>
+  </div>
+</section>
+
+<section id="dias" class="seccion oculto">
+  <h2>Selecciona un día</h2>
+  <div class="calendario">
+    <div class="mes">
+      <button onclick="cambiarMes(-1)">‹</button>
+      <span id="nombreMes"></span>
+      <button onclick="cambiarMes(1)">›</button>
+    </div>
+    <div id="diasMes" class="dias"></div>
+  </div>
+</section>
+
+<section id="horas" class="seccion oculto">
+  <h2>Selecciona una hora</h2>
+  <div class="bloque">
+    <h3>MAÑANA</h3>
+    <div id="manana" class="grid-horas"></div>
+  </div>
+  <div class="bloque">
+    <h3>TARDE</h3>
+    <div id="tarde" class="grid-horas"></div>
+  </div>
+</section>
+
+<section id="formulario" class="seccion oculto">
+  <h2>Datos de contacto</h2>
+  <form onsubmit="enviarReserva(event)">
+    <input type="text" placeholder="Nombre" required>
+    <input type="tel" placeholder="Teléfono" required>
+    <button type="submit">Confirmar cita</button>
+  </form>
+</section>
+
+<script src="clientes.js"></script>
+</body>
+</html>
