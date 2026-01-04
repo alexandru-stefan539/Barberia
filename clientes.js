@@ -1,62 +1,55 @@
+console.log("clientes.js cargado");
+
 let servicio = "", fecha = "", hora = "";
 
-const horasManana = [
-  "09:00","09:30","10:00","10:30","11:00",
-  "11:30","12:00","12:30","13:00","13:30"
-];
-const horasTarde = [
-  "16:30","17:00","17:30","18:00",
-  "18:30","19:00","19:30","20:00"
-];
-
-function seleccionarServicio(btn, s) {
-  limpiar("button");
-  btn.classList.add("seleccionado");
-  servicio = s;
-  document.getElementById("dias").classList.remove("oculto");
-  generarCalendario();
+function limpiarSeleccion() {
+  document.querySelectorAll(".seleccionado").forEach(e => {
+    e.classList.remove("seleccionado");
+  });
 }
 
-function generarCalendario() {
-  const cal = document.getElementById("calendario");
-  cal.innerHTML = "";
+function seleccionarServicio(btn, s) {
+  limpiarSeleccion();
+  btn.classList.add("seleccionado");
+  servicio = s;
+  generarDias();
+}
+
+function generarDias() {
+  const cont = document.getElementById("dias");
+  cont.innerHTML = "";
 
   const hoy = new Date();
   hoy.setHours(0,0,0,0);
-  const año = hoy.getFullYear();
-  const mes = hoy.getMonth();
-  const ultimoDia = new Date(año, mes + 1, 0).getDate();
 
-  for (let d = 1; d <= ultimoDia; d++) {
-    const f = new Date(año, mes, d);
+  for (let i = 0; i < 14; i++) {
+    const f = new Date();
+    f.setDate(hoy.getDate() + i);
+
     const b = document.createElement("button");
-    b.textContent = d;
+    b.textContent = f.toLocaleDateString();
 
-    if (f < hoy) {
-      b.classList.add("bloqueado");
-    } else {
-      b.onclick = () => seleccionarDia(b, f);
-    }
-    cal.appendChild(b);
+    b.onclick = () => {
+      limpiarSeleccion();
+      b.classList.add("seleccionado");
+      fecha = b.textContent;
+      generarHoras();
+    };
+
+    cont.appendChild(b);
   }
 }
 
-function seleccionarDia(btn, f) {
-  limpiar("#calendario button");
-  btn.classList.add("seleccionado");
-  fecha = f.toISOString().split("T")[0];
-  document.getElementById("horas").classList.remove("oculto");
-  generarHoras();
-}
-
 function generarHoras() {
-  generarBloque("manana", horasManana);
-  generarBloque("tarde", horasTarde);
-}
-
-function generarBloque(id, horas) {
-  const cont = document.getElementById(id);
+  const cont = document.getElementById("horas");
   cont.innerHTML = "";
+
+  const horas = [
+    "09:00","09:30","10:00","10:30","11:00","11:30",
+    "12:00","12:30","13:00","13:30",
+    "16:30","17:00","17:30","18:00","18:30",
+    "19:00","19:30","20:00"
+  ];
 
   const citas = JSON.parse(localStorage.getItem("citas") || "[]");
 
@@ -64,29 +57,33 @@ function generarBloque(id, horas) {
     const b = document.createElement("button");
     b.textContent = h;
 
-    if (citas.some(c => c.fecha === fecha && c.hora === h)) {
-      b.classList.add("ocupado");
+    const ocupada = citas.find(c => c.fecha === fecha && c.hora === h);
+    if (ocupada) {
+      b.classList.add("bloqueado");
     } else {
-      b.onclick = () => seleccionarHora(b, h);
+      b.onclick = () => {
+        limpiarSeleccion();
+        b.classList.add("seleccionado");
+        hora = h;
+      };
     }
+
     cont.appendChild(b);
   });
-}
-
-function seleccionarHora(btn, h) {
-  limpiar("#horas button");
-  btn.classList.add("seleccionado");
-  hora = h;
-  document.getElementById("formulario").classList.remove("oculto");
 }
 
 function reservar(e) {
   e.preventDefault();
 
+  if (!servicio || !fecha || !hora) {
+    alert("Falta seleccionar algo");
+    return;
+  }
+
   const citas = JSON.parse(localStorage.getItem("citas") || "[]");
+
   citas.push({
     nombre: nombre.value,
-    telefono: telefono.value,
     servicio,
     fecha,
     hora
@@ -94,9 +91,6 @@ function reservar(e) {
 
   localStorage.setItem("citas", JSON.stringify(citas));
   alert("Cita reservada");
-  location.reload();
-}
 
-function limpiar(sel) {
-  document.querySelectorAll(sel).forEach(b => b.classList.remove("seleccionado"));
+  location.reload();
 }
