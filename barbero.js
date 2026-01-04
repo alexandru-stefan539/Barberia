@@ -3,6 +3,8 @@ console.log("barbero.js funcionando");
 const USER = "admin";
 const PASS = "1234";
 
+let bloqueos = JSON.parse(localStorage.getItem("bloqueos")) || {};
+
 document.addEventListener("DOMContentLoaded", () => {
   const btn = document.getElementById("btnLogin");
   if (btn) {
@@ -18,6 +20,8 @@ function login() {
   if (u === USER && p === PASS) {
     document.getElementById("login").style.display = "none";
     document.getElementById("panel").style.display = "block";
+
+    mostrarBloqueos(); // SOLO después del login
   } else {
     error.innerText = "Usuario o contraseña incorrectos";
   }
@@ -26,13 +30,19 @@ function login() {
 function logout() {
   location.reload();
 }
-let bloqueos = JSON.parse(localStorage.getItem("bloqueos")) || {};
+
+/* =========================
+   BLOQUEO DE DÍAS Y HORAS
+   ========================= */
 
 function bloquear() {
   const fecha = document.getElementById("fechaBloqueo").value;
   const hora = document.getElementById("horaBloqueo").value;
 
-  if (!fecha) return alert("Selecciona una fecha");
+  if (!fecha) {
+    alert("Selecciona una fecha");
+    return;
+  }
 
   if (!bloqueos[fecha]) {
     bloqueos[fecha] = [];
@@ -43,7 +53,9 @@ function bloquear() {
     bloqueos[fecha] = ["todo"];
   } else {
     if (!bloqueos[fecha].includes("todo")) {
-      bloqueos[fecha].push(hora);
+      if (!bloqueos[fecha].includes(hora)) {
+        bloqueos[fecha].push(hora);
+      }
     }
   }
 
@@ -61,14 +73,13 @@ function mostrarBloqueos() {
 
   for (const fecha in bloqueos) {
     const item = document.createElement("div");
-    item.innerText =
-      bloqueos[fecha][0] === "todo"
-        ? `${fecha} — Día completo bloqueado`
-        : `${fecha} — Horas: ${bloqueos[fecha].join(", ")}`;
+
+    if (bloqueos[fecha][0] === "todo") {
+      item.innerText = `${fecha} — Día completo bloqueado`;
+    } else {
+      item.innerText = `${fecha} — Horas bloqueadas: ${bloqueos[fecha].join(", ")}`;
+    }
 
     div.appendChild(item);
   }
 }
-
-// Mostrar al entrar al panel
-document.addEventListener("DOMContentLoaded", mostrarBloqueos);
