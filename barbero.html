@@ -11,35 +11,41 @@
 <!-- LOGIN -->
 <div id="login" class="contenedor">
   <h1>Panel del Barbero</h1>
+
   <input id="usuario" type="text" placeholder="Usuario">
   <input id="password" type="password" placeholder="Contraseña">
+
   <button id="btnLogin">Entrar</button>
   <p id="error"></p>
 </div>
 
 <!-- PANEL -->
 <div id="panel" class="contenedor" style="display:none">
+
   <h1>Gestión de la barbería</h1>
 
   <h2>Citas</h2>
   <div id="listaCitas"></div>
 
+  <hr>
+
+  <h2>Bloquear agenda</h2>
+
+  <label>Día:</label>
+  <input type="date" id="fechaBloqueo">
+
+  <label>Hora (opcional):</label>
+  <input type="time" id="horaBloqueo">
+
+  <button onclick="bloquear()">Bloquear</button>
+
+  <h3>Bloqueos actuales</h3>
+  <div id="listaBloqueos"></div>
+
+  <br>
   <button onclick="logout()">Cerrar sesión</button>
 </div>
 
 <script src="barbero.js"></script>
 </body>
 </html>
-<h2>Bloquear agenda</h2>
-
-<label>Día:</label>
-<input type="date" id="fechaBloqueo">
-
-<label>Hora (opcional):</label>
-<input type="time" id="horaBloqueo">
-
-<button onclick="bloquear()">Bloquear</button>
-
-<h3>Bloqueos actuales</h3>
-<div id="listaBloqueos"></div>
-
