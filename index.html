@@ -7,11 +7,14 @@
 </head>
 <body>
 
-<h1>Reservar cita</h1>
+<h1>Reserva tu cita</h1>
 
 <h2>Servicio</h2>
-<button onclick="seleccionarServicio(this,'Corte')">Corte</button>
-<button onclick="seleccionarServicio(this,'Tinte')">Tinte</button>
+<div id="servicios">
+  <button onclick="seleccionarServicio(this,'Corte')">Corte</button>
+  <button onclick="seleccionarServicio(this,'Tinte')">Tinte</button>
+  <button onclick="seleccionarServicio(this,'Corte + Tinte')">Corte + Tinte</button>
+</div>
 
 <h2>Día</h2>
 <div id="dias"></div>
@@ -19,9 +22,10 @@
 <h2>Hora</h2>
 <div id="horas"></div>
 
+<h2>Datos</h2>
 <form onsubmit="reservar(event)">
   <input id="nombre" placeholder="Nombre" required>
-  <button>Reservar</button>
+  <button>Confirmar cita</button>
 </form>
 
 <script src="clientes.js"></script>
