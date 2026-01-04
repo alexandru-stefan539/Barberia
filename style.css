@@ -5,6 +5,19 @@ button{padding:15px;border-radius:10px;border:none;background:#1e1e1e;color:#fff
 .oculto{display:none}
 .grid{display:grid;gap:10px}
 .seleccionado {
+.seleccionado {
   background: #ff7a00;
   color: #000;
+}
+
+.bloqueado {
+  background: #444;
+  color: #999;
+  pointer-events: none;
+}
+
+.ocupado {
+  background: #7a0000;
+  color: #fff;
+  pointer-events: none;
 }
