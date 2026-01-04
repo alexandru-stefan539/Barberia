@@ -7,9 +7,7 @@ let bloqueos = JSON.parse(localStorage.getItem("bloqueos")) || {};
 
 document.addEventListener("DOMContentLoaded", () => {
   const btn = document.getElementById("btnLogin");
-  if (btn) {
-    btn.addEventListener("click", login);
-  }
+  if (btn) btn.addEventListener("click", login);
 });
 
 function login() {
@@ -21,7 +19,8 @@ function login() {
     document.getElementById("login").style.display = "none";
     document.getElementById("panel").style.display = "block";
 
-    mostrarBloqueos(); // SOLO después del login
+    mostrarBloqueos();
+    mostrarCitas(); // 👈 IMPORTANTE
   } else {
     error.innerText = "Usuario o contraseña incorrectos";
   }
@@ -31,60 +30,50 @@ function logout() {
   location.reload();
 }
 
-/* =========================
-   BLOQUEO DE DÍAS Y HORAS
-   ========================= */
+/* ================= BLOQUEOS ================= */
 
 function bloquear() {
   const fecha = document.getElementById("fechaBloqueo").value;
   const hora = document.getElementById("horaBloqueo").value;
 
-  if (!fecha) {
-    alert("Selecciona una fecha");
-    return;
-  }
+  if (!fecha) return alert("Selecciona una fecha");
 
-  if (!bloqueos[fecha]) {
-    bloqueos[fecha] = [];
-  }
+  if (!bloqueos[fecha]) bloqueos[fecha] = [];
 
   if (!hora) {
-    // Bloquear día completo
     bloqueos[fecha] = ["todo"];
   } else {
-    if (!bloqueos[fecha].includes("todo")) {
-      if (!bloqueos[fecha].includes(hora)) {
-        bloqueos[fecha].push(hora);
-      }
+    if (!bloqueos[fecha].includes("todo") && !bloqueos[fecha].includes(hora)) {
+      bloqueos[fecha].push(hora);
     }
   }
 
-  guardarBloqueos();
-  mostrarBloqueos();
-}
-
-function guardarBloqueos() {
   localStorage.setItem("bloqueos", JSON.stringify(bloqueos));
+  mostrarBloqueos();
 }
 
 function mostrarBloqueos() {
   const div = document.getElementById("listaBloqueos");
+  if (!div) return;
+
   div.innerHTML = "";
 
   for (const fecha in bloqueos) {
-    const item = document.createElement("div");
-
-    if (bloqueos[fecha][0] === "todo") {
-      item.innerText = `${fecha} — Día completo bloqueado`;
-    } else {
-      item.innerText = `${fecha} — Horas bloqueadas: ${bloqueos[fecha].join(", ")}`;
-    }
-
-    div.appendChild(item);
+    const d = document.createElement("div");
+    d.textContent =
+      bloqueos[fecha][0] === "todo"
+        ? `${fecha} — Día completo bloqueado`
+        : `${fecha} — Horas: ${bloqueos[fecha].join(", ")}`;
+    div.appendChild(d);
   }
 }
+
+/* ================= CITAS ================= */
+
 function mostrarCitas() {
   const cont = document.getElementById("listaCitas");
+  if (!cont) return;
+
   cont.innerHTML = "";
 
   const citas = JSON.parse(localStorage.getItem("citas") || "[]");
@@ -96,7 +85,7 @@ function mostrarCitas() {
 
   citas.forEach(c => {
     const div = document.createElement("div");
-    div.innerText = `${c.fecha} — ${c.hora} — ${c.servicio}`;
+    div.textContent = `${c.fecha} — ${c.hora} — ${c.servicio}`;
     cont.appendChild(div);
   });
 }
