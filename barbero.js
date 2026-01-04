@@ -1,91 +1,39 @@
-console.log("barbero.js funcionando");
+const USER="admin",PASS="1234";
 
-const USER = "admin";
-const PASS = "1234";
+document.getElementById("btnLogin").onclick=login;
 
-let bloqueos = JSON.parse(localStorage.getItem("bloqueos")) || {};
-
-document.addEventListener("DOMContentLoaded", () => {
-  const btn = document.getElementById("btnLogin");
-  if (btn) btn.addEventListener("click", login);
-});
-
-function login() {
-  const u = document.getElementById("usuario").value;
-  const p = document.getElementById("password").value;
-  const error = document.getElementById("error");
-
-  if (u === USER && p === PASS) {
-    document.getElementById("login").style.display = "none";
-    document.getElementById("panel").style.display = "block";
-
-    mostrarBloqueos();
-    mostrarCitas(); // 👈 IMPORTANTE
-  } else {
-    error.innerText = "Usuario o contraseña incorrectos";
-  }
+function login(){
+  if(usuario.value===USER && password.value===PASS){
+    login.style.display="none";
+    panel.style.display="block";
+    mostrarCitas();
+  } else error.innerText="Credenciales incorrectas";
 }
 
-function logout() {
-  location.reload();
+function logout(){location.reload();}
+
+function mostrarCitas(){
+  const cont=document.getElementById("listaCitas");
+  cont.innerHTML="";
+  const dia=document.getElementById("filtroDia").value;
+  const citas=JSON.parse(localStorage.getItem("citas")||"[]");
+
+  citas
+    .filter(c=>!dia||c.fecha==dia)
+    .forEach((c,i)=>{
+      const d=document.createElement("div");
+      d.innerHTML=`
+        <b>${c.fecha} ${c.hora}</b><br>
+        ${c.nombre} — ${c.servicio}
+        <button onclick="cancelar(${i})">❌</button>
+      `;
+      cont.appendChild(d);
+    });
 }
 
-/* ================= BLOQUEOS ================= */
-
-function bloquear() {
-  const fecha = document.getElementById("fechaBloqueo").value;
-  const hora = document.getElementById("horaBloqueo").value;
-
-  if (!fecha) return alert("Selecciona una fecha");
-
-  if (!bloqueos[fecha]) bloqueos[fecha] = [];
-
-  if (!hora) {
-    bloqueos[fecha] = ["todo"];
-  } else {
-    if (!bloqueos[fecha].includes("todo") && !bloqueos[fecha].includes(hora)) {
-      bloqueos[fecha].push(hora);
-    }
-  }
-
-  localStorage.setItem("bloqueos", JSON.stringify(bloqueos));
-  mostrarBloqueos();
-}
-
-function mostrarBloqueos() {
-  const div = document.getElementById("listaBloqueos");
-  if (!div) return;
-
-  div.innerHTML = "";
-
-  for (const fecha in bloqueos) {
-    const d = document.createElement("div");
-    d.textContent =
-      bloqueos[fecha][0] === "todo"
-        ? `${fecha} — Día completo bloqueado`
-        : `${fecha} — Horas: ${bloqueos[fecha].join(", ")}`;
-    div.appendChild(d);
-  }
-}
-
-/* ================= CITAS ================= */
-
-function mostrarCitas() {
-  const cont = document.getElementById("listaCitas");
-  if (!cont) return;
-
-  cont.innerHTML = "";
-
-  const citas = JSON.parse(localStorage.getItem("citas") || "[]");
-
-  if (citas.length === 0) {
-    cont.innerHTML = "<p>No hay citas todavía</p>";
-    return;
-  }
-
-  citas.forEach(c => {
-    const div = document.createElement("div");
-    div.textContent = `${c.fecha} — ${c.hora} — ${c.servicio}`;
-    cont.appendChild(div);
-  });
+function cancelar(i){
+  const citas=JSON.parse(localStorage.getItem("citas"));
+  citas.splice(i,1);
+  localStorage.setItem("citas",JSON.stringify(citas));
+  mostrarCitas();
 }
