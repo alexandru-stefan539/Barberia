@@ -1,10 +1,51 @@
 body {
   font-family: Arial;
-  background: #111;
-  color: white;
+  background: #0f0f0f;
+  color: #fff;
+  margin: 0;
+}
+
+header {
+  text-align: center;
+  padding: 20px;
+  background: #000;
+}
+
+.seccion {
   padding: 20px;
 }
 
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: 10px;
+}
+
 button {
-  margin-top: 5px;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  background: #1e1e1e;
+  color: #fff;
+  cursor: pointer;
+}
+
+button span {
+  font-size: 0.9em;
+  color: #aaa;
+}
+
+.seleccionado {
+  background: #ff7a00;
+  color: #000;
+}
+
+.bloqueado {
+  background: #444;
+  color: #888;
+  pointer-events: none;
+}
+
+.oculto {
+  display: none;
 }
