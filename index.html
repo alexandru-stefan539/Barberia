@@ -16,9 +16,9 @@
 <section id="servicios" class="seccion">
   <h2>Servicios</h2>
   <div class="grid">
-    <button onclick="seleccionarServicio('Corte')">Corte<br><span>15€</span></button>
-    <button onclick="seleccionarServicio('Corte + tinte')">Corte + tinte<br><span>30€</span></button>
-    <button onclick="seleccionarServicio('Tinte')">Tinte<br><span>20€</span></button>
+    <button onclick="seleccionarServicio(this,'Corte')">Corte<br><span>15€</span></button>
+    <button onclick="seleccionarServicio(this,'Corte + tinte')">Corte + tinte<br><span>30€</span></button>
+    <button onclick="seleccionarServicio(this,'Tinte')">Tinte<br><span>20€</span></button>
   </div>
 </section>
 
@@ -36,10 +36,12 @@
 
 <section id="horas" class="seccion oculto">
   <h2>Selecciona una hora</h2>
+
   <div class="bloque">
     <h3>MAÑANA</h3>
     <div id="manana" class="grid-horas"></div>
   </div>
+
   <div class="bloque">
     <h3>TARDE</h3>
     <div id="tarde" class="grid-horas"></div>
