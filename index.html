@@ -2,44 +2,50 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Panel del Barbero</title>
+  <title>Barbería Profesional</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="barbero.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- LOGIN -->
-<div id="login" class="contenedor">
-  <h1>Panel del Barbero</h1>
-  <input id="usuario" type="text" placeholder="Usuario">
-  <input id="password" type="password" placeholder="Contraseña">
-  <button id="btnLogin">Entrar</button>
-  <p id="error"></p>
-</div>
+<header>
+  <h1>Barbería Profesional</h1>
+  <p>Reserva tu cita en segundos</p>
+</header>
 
-<!-- PANEL -->
-<div id="panel" class="contenedor" style="display:none">
+<section class="seccion">
+  <h2>Servicios</h2>
+  <div class="grid">
+    <button onclick="seleccionarServicio(this,'Corte')">Corte<br>15€</button>
+    <button onclick="seleccionarServicio(this,'Corte + tinte')">Corte + tinte<br>30€</button>
+    <button onclick="seleccionarServicio(this,'Tinte')">Tinte<br>20€</button>
+  </div>
+</section>
 
-  <h1>Gestión de la barbería</h1>
+<section id="dias" class="seccion oculto">
+  <h2>Selecciona un día</h2>
+  <div id="calendario" class="grid"></div>
+</section>
 
-  <!-- BLOQUEOS -->
-  <h2>Bloquear día / hora</h2>
-  <input type="date" id="fechaBloqueo">
-  <input type="time" id="horaBloqueo">
-  <button onclick="bloquear()">Bloquear</button>
+<section id="horas" class="seccion oculto">
+  <h2>Selecciona una hora</h2>
 
-  <h3>Bloqueos actuales</h3>
-  <div id="listaBloqueos"></div>
+  <h3>MAÑANA</h3>
+  <div id="manana" class="grid"></div>
 
-  <!-- CITAS -->
-  <h2>Citas reservadas</h2>
-  <button onclick="mostrarCitas()">Actualizar citas</button>
-  <div id="listaCitas"></div>
+  <h3>TARDE</h3>
+  <div id="tarde" class="grid"></div>
+</section>
 
-  <br>
-  <button onclick="logout()">Cerrar sesión</button>
-</div>
+<section id="formulario" class="seccion oculto">
+  <h2>Datos</h2>
+  <form onsubmit="reservar(event)">
+    <input id="nombre" type="text" placeholder="Nombre" required>
+    <input id="telefono" type="tel" placeholder="Teléfono" required>
+    <button type="submit">Confirmar cita</button>
+  </form>
+</section>
 
-<script src="barbero.js"></script>
+<script src="clientes.js"></script>
 </body>
 </html>
