@@ -27,30 +27,23 @@ function getCitas() {
 
 /* ================= SERVICIOS ================= */
 
-function seleccionarServicio(s) {
+function seleccionarServicio(btn, s) {
   servicio = s;
 
   if (btnServicio) btnServicio.classList.remove('seleccionado');
-  btnServicio = event.target;
+  btnServicio = btn;
   btnServicio.classList.add('seleccionado');
 
   document.getElementById('dias').classList.remove('oculto');
   generarDias();
 }
 
-/* ================= CALENDARIO REAL ================= */
+/* ================= CALENDARIO ================= */
 
 function cambiarMes(d) {
   mes += d;
-
-  if (mes < 0) {
-    mes = 11;
-    año--;
-  } else if (mes > 11) {
-    mes = 0;
-    año++;
-  }
-
+  if (mes < 0) { mes = 11; año--; }
+  if (mes > 11) { mes = 0; año++; }
   generarDias();
 }
 
@@ -64,17 +57,17 @@ function generarDias() {
   cont.innerHTML = '';
 
   const bloqueos = getBloqueos();
-  const totalDias = diasDelMes(mes, año);
+  const total = diasDelMes(mes, año);
 
-  for (let i = 1; i <= totalDias; i++) {
+  for (let i = 1; i <= total; i++) {
     const b = document.createElement('button');
-    const claveFecha = `${i}-${mes + 1}-${año}`;
+    const clave = `${i}-${mes + 1}-${año}`;
     b.textContent = i;
 
-    if (bloqueos[claveFecha]?.includes('todo')) {
+    if (bloqueos[clave]?.includes('todo')) {
       b.classList.add('bloqueado');
     } else {
-      b.onclick = () => seleccionarDia(b, claveFecha);
+      b.onclick = () => seleccionarDia(b, clave);
     }
 
     cont.appendChild(b);
@@ -105,16 +98,16 @@ const horasTarde = [
 ];
 
 function generarHoras() {
-  const bloqueos = getBloqueos();
-  const citas = getCitas();
-
-  generarBloque('manana', horasManana, bloqueos, citas);
-  generarBloque('tarde', horasTarde, bloqueos, citas);
+  generarBloque('manana', horasManana);
+  generarBloque('tarde', horasTarde);
 }
 
-function generarBloque(id, horas, bloqueos, citas) {
+function generarBloque(id, horas) {
   const cont = document.getElementById(id);
   cont.innerHTML = '';
+
+  const bloqueos = getBloqueos();
+  const citas = getCitas();
 
   horas.forEach(h => {
     const b = document.createElement('button');
@@ -124,9 +117,7 @@ function generarBloque(id, horas, bloqueos, citas) {
       bloqueos[fecha]?.includes('todo') ||
       bloqueos[fecha]?.includes(h);
 
-    const ocupado = citas.some(c =>
-      c.fecha === fecha && c.hora === h
-    );
+    const ocupado = citas.some(c => c.fecha === fecha && c.hora === h);
 
     if (bloqueado) {
       b.classList.add('bloqueado');
