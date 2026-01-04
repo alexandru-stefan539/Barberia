@@ -1,3 +1,8 @@
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".oculto").forEach(s => {
+    s.style.display = "none";
+  });
+});
 let servicio='',fecha='',hora='';
 const meses=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 let mes=new Date().getMonth(),año=2026;
