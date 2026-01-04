@@ -2,33 +2,28 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Barbería Profesional</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reservar cita</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header>
-  <h1>Barbería Profesional</h1>
-  <p>Reserva tu cita</p>
-</header>
+<h1>Reservar cita</h1>
 
-<section class="seccion">
-  <h2>Servicios</h2>
-  <div class="grid">
-    <button onclick="seleccionarServicio(this,'Corte')">Corte</button>
-    <button onclick="seleccionarServicio(this,'Corte + tinte')">Corte + tinte</button>
-    <button onclick="seleccionarServicio(this,'Tinte')">Tinte</button>
-  </div>
-</section>
+<h2>Servicio</h2>
+<button onclick="seleccionarServicio(this,'Corte')">Corte</button>
+<button onclick="seleccionarServicio(this,'Tinte')">Tinte</button>
 
-<section id="dias" class="seccion oculto">
-  <h2>Día</h2>
-  <div id="calendario" class="grid"></div>
-</section>
+<h2>Día</h2>
+<div id="dias"></div>
 
-<section id="horas" class="seccion oculto">
-  <h2>Hora</h2>
+<h2>Hora</h2>
+<div id="horas"></div>
 
-  <h3>Mañana</h3>
-  <div id="manana" class="grid"></div
+<form onsubmit="reservar(event)">
+  <input id="nombre" placeholder="Nombre" required>
+  <button>Reservar</button>
+</form>
+
+<script src="clientes.js"></script>
+</body>
+</html>
