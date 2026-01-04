@@ -1,17 +1,15 @@
 const USER = "admin";
 const PASS = "1234";
 
-btnLogin.onclick = login;
-
-function login() {
+document.getElementById("btnLogin").onclick = () => {
   if (usuario.value === USER && password.value === PASS) {
-   document.getElementById("login").style.display = "none";
-document.getElementById("panel").style.display = "block";
+    document.getElementById("login").style.display = "none";
+    document.getElementById("panel").style.display = "block";
     mostrarCitas();
   } else {
     error.innerText = "Credenciales incorrectas";
   }
-}
+};
 
 function logout() {
   location.reload();
@@ -33,8 +31,7 @@ function mostrarCitas() {
     d.innerHTML = `
       <b>${c.fecha} ${c.hora}</b><br>
       Cliente: ${c.nombre}<br>
-      Servicio: ${c.servicio}
-      <br>
+      Servicio: ${c.servicio}<br>
       <button onclick="cancelar(${i})">Cancelar</button>
       <hr>
     `;
