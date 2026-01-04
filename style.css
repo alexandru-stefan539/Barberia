@@ -1,27 +1,10 @@
 body {
   font-family: Arial;
-  background: #0f0f0f;
-  color: #fff;
+  background: #111;
+  color: white;
   padding: 20px;
 }
 
 button {
-  padding: 10px;
-  margin: 5px;
-  background: #1e1e1e;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.seleccionado {
-  background: #ff7a00;
-  color: #000;
-}
-
-.bloqueado {
-  background: #444;
-  color: #999;
-  pointer-events: none;
+  margin-top: 5px;
 }
