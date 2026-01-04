@@ -2,61 +2,44 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Barbería Profesional</title>
+  <title>Panel del Barbero</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="barbero.css">
 </head>
 <body>
 
-<header>
-  <h1>Barbería Profesional</h1>
-  <p>Reserva tu cita en segundos</p>
-</header>
+<!-- LOGIN -->
+<div id="login" class="contenedor">
+  <h1>Panel del Barbero</h1>
+  <input id="usuario" type="text" placeholder="Usuario">
+  <input id="password" type="password" placeholder="Contraseña">
+  <button id="btnLogin">Entrar</button>
+  <p id="error"></p>
+</div>
 
-<section id="servicios" class="seccion">
-  <h2>Servicios</h2>
-  <div class="grid">
-    <button onclick="seleccionarServicio(this,'Corte')">Corte<br><span>15€</span></button>
-    <button onclick="seleccionarServicio(this,'Corte + tinte')">Corte + tinte<br><span>30€</span></button>
-    <button onclick="seleccionarServicio(this,'Tinte')">Tinte<br><span>20€</span></button>
-  </div>
-</section>
+<!-- PANEL -->
+<div id="panel" class="contenedor" style="display:none">
 
-<section id="dias" class="seccion oculto">
-  <h2>Selecciona un día</h2>
-  <div class="calendario">
-    <div class="mes">
-      <button onclick="cambiarMes(-1)">‹</button>
-      <span id="nombreMes"></span>
-      <button onclick="cambiarMes(1)">›</button>
-    </div>
-    <div id="diasMes" class="dias"></div>
-  </div>
-</section>
+  <h1>Gestión de la barbería</h1>
 
-<section id="horas" class="seccion oculto">
-  <h2>Selecciona una hora</h2>
+  <!-- BLOQUEOS -->
+  <h2>Bloquear día / hora</h2>
+  <input type="date" id="fechaBloqueo">
+  <input type="time" id="horaBloqueo">
+  <button onclick="bloquear()">Bloquear</button>
 
-  <div class="bloque">
-    <h3>MAÑANA</h3>
-    <div id="manana" class="grid-horas"></div>
-  </div>
+  <h3>Bloqueos actuales</h3>
+  <div id="listaBloqueos"></div>
 
-  <div class="bloque">
-    <h3>TARDE</h3>
-    <div id="tarde" class="grid-horas"></div>
-  </div>
-</section>
+  <!-- CITAS -->
+  <h2>Citas reservadas</h2>
+  <button onclick="mostrarCitas()">Actualizar citas</button>
+  <div id="listaCitas"></div>
 
-<section id="formulario" class="seccion oculto">
-  <h2>Datos de contacto</h2>
-  <form onsubmit="enviarReserva(event)">
-    <input type="text" placeholder="Nombre" required>
-    <input type="tel" placeholder="Teléfono" required>
-    <button type="submit">Confirmar cita</button>
-  </form>
-</section>
+  <br>
+  <button onclick="logout()">Cerrar sesión</button>
+</div>
 
-<script src="clientes.js"></script>
+<script src="barbero.js"></script>
 </body>
 </html>
