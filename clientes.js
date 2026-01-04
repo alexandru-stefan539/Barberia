@@ -11,8 +11,9 @@ const meses = [
   'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'
 ];
 
-let mes = new Date().getMonth();
-let año = 2026;
+let hoy = new Date();
+let mes = hoy.getMonth();
+let año = hoy.getFullYear();
 
 /* ================= DATOS ================= */
 
@@ -37,21 +38,35 @@ function seleccionarServicio(s) {
   generarDias();
 }
 
-/* ================= DÍAS ================= */
+/* ================= CALENDARIO REAL ================= */
 
 function cambiarMes(d) {
-  mes = (mes + d + 12) % 12;
+  mes += d;
+
+  if (mes < 0) {
+    mes = 11;
+    año--;
+  } else if (mes > 11) {
+    mes = 0;
+    año++;
+  }
+
   generarDias();
 }
 
+function diasDelMes(m, a) {
+  return new Date(a, m + 1, 0).getDate();
+}
+
 function generarDias() {
-  document.getElementById('nombreMes').innerText = meses[mes] + ' ' + año;
+  document.getElementById('nombreMes').innerText = `${meses[mes]} ${año}`;
   const cont = document.getElementById('diasMes');
   cont.innerHTML = '';
 
   const bloqueos = getBloqueos();
+  const totalDias = diasDelMes(mes, año);
 
-  for (let i = 1; i <= 30; i++) {
+  for (let i = 1; i <= totalDias; i++) {
     const b = document.createElement('button');
     const claveFecha = `${i}-${mes + 1}-${año}`;
     b.textContent = i;
@@ -79,38 +94,49 @@ function seleccionarDia(btn, f) {
 
 /* ================= HORAS ================= */
 
+const horasManana = [
+  '09:00','09:30','10:00','10:30','11:00',
+  '11:30','12:00','12:30','13:00','13:30'
+];
+
+const horasTarde = [
+  '16:30','17:00','17:30','18:00',
+  '18:30','19:00','19:30','20:00'
+];
+
 function generarHoras() {
-  const horas = ['10:00','11:00','12:00','17:00','18:00'];
   const bloqueos = getBloqueos();
   const citas = getCitas();
 
-  ['manana','tarde'].forEach(id => {
-    const c = document.getElementById(id);
-    c.innerHTML = '';
+  generarBloque('manana', horasManana, bloqueos, citas);
+  generarBloque('tarde', horasTarde, bloqueos, citas);
+}
 
-    horas.forEach(h => {
-      const b = document.createElement('button');
+function generarBloque(id, horas, bloqueos, citas) {
+  const cont = document.getElementById(id);
+  cont.innerHTML = '';
 
-      const bloqueado =
-        bloqueos[fecha]?.includes('todo') ||
-        bloqueos[fecha]?.includes(h);
+  horas.forEach(h => {
+    const b = document.createElement('button');
+    b.textContent = h;
 
-      const ocupado = citas.some(c =>
-        c.fecha === fecha && c.hora === h
-      );
+    const bloqueado =
+      bloqueos[fecha]?.includes('todo') ||
+      bloqueos[fecha]?.includes(h);
 
-      b.textContent = h;
+    const ocupado = citas.some(c =>
+      c.fecha === fecha && c.hora === h
+    );
 
-      if (bloqueado) {
-        b.classList.add('bloqueado');
-      } else if (ocupado) {
-        b.classList.add('ocupado');
-      } else {
-        b.onclick = () => seleccionarHora(b, h);
-      }
+    if (bloqueado) {
+      b.classList.add('bloqueado');
+    } else if (ocupado) {
+      b.classList.add('ocupado');
+    } else {
+      b.onclick = () => seleccionarHora(b, h);
+    }
 
-      c.appendChild(b);
-    });
+    cont.appendChild(b);
   });
 }
 
