@@ -5,8 +5,8 @@ btnLogin.onclick = login;
 
 function login() {
   if (usuario.value === USER && password.value === PASS) {
-    login.style.display = "none";
-    panel.style.display = "block";
+   document.getElementById("login").style.display = "none";
+document.getElementById("panel").style.display = "block";
     mostrarCitas();
   } else {
     error.innerText = "Credenciales incorrectas";
