@@ -83,3 +83,20 @@ function mostrarBloqueos() {
     div.appendChild(item);
   }
 }
+function mostrarCitas() {
+  const cont = document.getElementById("listaCitas");
+  cont.innerHTML = "";
+
+  const citas = JSON.parse(localStorage.getItem("citas") || "[]");
+
+  if (citas.length === 0) {
+    cont.innerHTML = "<p>No hay citas todavía</p>";
+    return;
+  }
+
+  citas.forEach(c => {
+    const div = document.createElement("div");
+    div.innerText = `${c.fecha} — ${c.hora} — ${c.servicio}`;
+    cont.appendChild(div);
+  });
+}
