@@ -4,23 +4,30 @@
   <meta charset="UTF-8">
   <title>Panel del Barbero</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="panel.css">
+  <link rel="stylesheet" href="barbero.css">
 </head>
 <body>
 
-<h1>Panel del Barbero</h1>
-
-<div id="login">
-  <input id="user" placeholder="Usuario">
-  <input id="pass" type="password" placeholder="Contraseña">
-  <button id="btnLogin" type="button">Entrar</button>
+<!-- LOGIN -->
+<div id="login" class="contenedor">
+  <h1>Panel del Barbero</h1>
+  <input id="usuario" type="text" placeholder="Usuario">
+  <input id="password" type="password" placeholder="Contraseña">
+  <button id="btnLogin">Entrar</button>
+  <p id="error"></p>
 </div>
 
-<div id="panel" style="display:none">
+<!-- PANEL -->
+<div id="panel" class="contenedor" style="display:none">
+  <h1>Gestión de la barbería</h1>
+
   <h2>Citas</h2>
-  <ul id="lista"></ul>
+  <div id="listaCitas"></div>
+
+  <button onclick="logout()">Cerrar sesión</button>
 </div>
 
 <script src="barbero.js"></script>
 </body>
 </html>
+
