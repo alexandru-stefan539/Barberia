@@ -1,19 +1,14 @@
-const USER = "admin";
-const PASS = "1234";
+console.log("barbero.js cargado");
 
-document.getElementById("btnLogin").onclick = () => {
-  if (usuario.value === USER && password.value === PASS) {
+btnLogin.onclick = () => {
+  if (usuario.value === "admin" && password.value === "1234") {
     document.getElementById("login").style.display = "none";
     document.getElementById("panel").style.display = "block";
     mostrarCitas();
   } else {
-    error.innerText = "Credenciales incorrectas";
+    alert("Credenciales incorrectas");
   }
 };
-
-function logout() {
-  location.reload();
-}
 
 function mostrarCitas() {
   const cont = document.getElementById("listaCitas");
@@ -21,17 +16,11 @@ function mostrarCitas() {
 
   const citas = JSON.parse(localStorage.getItem("citas") || "[]");
 
-  if (citas.length === 0) {
-    cont.innerHTML = "<p>No hay citas</p>";
-    return;
-  }
-
   citas.forEach((c, i) => {
     const d = document.createElement("div");
     d.innerHTML = `
-      <b>${c.fecha} ${c.hora}</b><br>
-      Cliente: ${c.nombre}<br>
-      Servicio: ${c.servicio}<br>
+      <strong>${c.nombre}</strong><br>
+      ${c.servicio} — ${c.fecha} — ${c.hora}
       <button onclick="cancelar(${i})">Cancelar</button>
       <hr>
     `;
@@ -40,7 +29,7 @@ function mostrarCitas() {
 }
 
 function cancelar(i) {
-  const citas = JSON.parse(localStorage.getItem("citas"));
+  const citas = JSON.parse(localStorage.getItem("citas") || "[]");
   citas.splice(i, 1);
   localStorage.setItem("citas", JSON.stringify(citas));
   mostrarCitas();
